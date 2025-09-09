@@ -1,4 +1,6 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta name="x-poe-datastore-behavior" content="local_only">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero Bite Burger - عجلة الحظ</title>
@@ -232,6 +234,9 @@
         .file-upload input[type=file] {
             position: absolute;
             left: -9999px;
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
         
         /* Status indicators */
@@ -292,6 +297,22 @@
         
         ::-webkit-scrollbar-thumb:hover {
             background: #b91c1c;
+        }
+
+        /* WhatsApp button animation */
+        .whatsapp-pulse {
+            animation: whatsapp-pulse 2s infinite;
+        }
+        
+        @keyframes whatsapp-pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+            }
+            50% { 
+                transform: scale(1.05); 
+                box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+            }
         }
     </style>
 <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.bd4eeeb8e8e02052ee92.js"></script></head>
@@ -583,11 +604,32 @@
                     </p>
                     <p class="text-yellow-800 text-xs mt-1">يمكنك تحميل الكوبون في أي وقت</p>
                 </div>
-                <button onclick="downloadPrizeImage()" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
-                    <span class="group-hover:scale-110 transition-transform inline-block mr-2">📥</span>
-                    تحميل كوبون الجائزة
-                    <span class="group-hover:scale-110 transition-transform inline-block ml-2">🎫</span>
-                </button>
+                
+                <!-- WhatsApp Share Required Notice -->
+                <div class="bg-green-100 dark:bg-green-900/20 border-2 border-green-500 rounded-lg p-4 mb-4">
+                    <p class="text-green-800 dark:text-green-400 font-bold text-sm flex items-center justify-center mb-2">
+                        <span class="mr-2">📱</span>
+                        مطلوب: مشاركة الكوبون على الواتساب
+                        <span class="ml-2">✅</span>
+                    </p>
+                    <p class="text-green-700 dark:text-green-300 text-xs text-center">
+                        يجب إرسال الكوبون على الواتساب لرقم المطعم للتأكد من صحة رقم جوالك
+                    </p>
+                </div>
+                
+                <div class="flex flex-col space-y-3">
+                    <button onclick="downloadPrizeImage()" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
+                        <span class="group-hover:scale-110 transition-transform inline-block mr-2">📥</span>
+                        تحميل كوبون الجائزة
+                        <span class="group-hover:scale-110 transition-transform inline-block ml-2">🎫</span>
+                    </button>
+                    
+                    <button onclick="shareToWhatsApp()" class="whatsapp-pulse bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
+                        <span class="group-hover:scale-110 transition-transform inline-block mr-2">📱</span>
+                        إرسال الكوبون عبر الواتساب (مطلوب)
+                        <span class="group-hover:scale-110 transition-transform inline-block ml-2">✅</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -599,12 +641,31 @@
                 <div id="prizeDisplay" class="text-xl font-semibold text-gray-800 dark:text-white mb-6 p-4 bg-hero-yellow/20 rounded-lg border-2 border-hero-yellow/50"></div>
                 <p id="prizeInstructions" class="text-sm text-gray-600 dark:text-gray-400 mb-6">احتفظ بهذا الكوبون وأظهره للكاشير للحصول على جائزتك</p>
                 
+                <!-- WhatsApp Share Required Notice in Modal -->
+                <div id="whatsappNotice" class="bg-green-100 dark:bg-green-900/20 border-2 border-green-500 rounded-lg p-4 mb-4 hidden">
+                    <p class="text-green-800 dark:text-green-400 font-bold text-sm flex items-center justify-center mb-2">
+                        <span class="mr-2">📱</span>
+                        مطلوب: مشاركة الكوبون على الواتساب
+                        <span class="ml-2">✅</span>
+                    </p>
+                    <p class="text-green-700 dark:text-green-300 text-xs text-center">
+                        يجب إرسال الكوبون على الواتساب لرقم المطعم للتأكد من صحة رقم جوالك
+                    </p>
+                </div>
+
                 <div class="flex flex-col space-y-3">
                     <button id="downloadButton" onclick="downloadPrizeImage()" class="bg-hero-green text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
                         <span class="mr-2">📥</span>
                         تحميل كوبون الجائزة
                         <span class="ml-2">🎫</span>
                     </button>
+                    
+                    <button id="whatsappButton" onclick="shareToWhatsApp()" class="whatsapp-pulse bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center group hidden">
+                        <span class="group-hover:scale-110 transition-transform mr-2">📱</span>
+                        إرسال الكوبون عبر الواتساب (مطلوب)
+                        <span class="group-hover:scale-110 transition-transform ml-2">✅</span>
+                    </button>
+                    
                     <button onclick="newCustomer()" class="bg-hero-blue text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
                         <span class="mr-2">🔄</span>
                         عميل جديد
@@ -621,13 +682,16 @@
     </div>
 
     <script>
-        // Configuration - يجب تحديث هذا الرابط بعد نشر Google Apps Script
+        // Configuration
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO7-WRgplsPbCq4Edsqc7mN8ZhpxsBOg6iq7jjrWpx2yf8fyxnonMRQxP7CObmF5xSnA/exec';
+        
+        // Restaurant WhatsApp number
+        const RESTAURANT_WHATSAPP = '+96892108243';
         
         // Settings (will be loaded from Google Sheets)
         let appSettings = {
             maxFileSize: 5, // MB
-            maxAttempts: 1,
+            maxAttempts: 5, // المحاولات الأساسية
             couponValidityDays: 30,
             allowDuplicates: false
         };
@@ -642,7 +706,12 @@
         let hasSpun = false;
         let hasWonRealPrize = false;
         let participantId = null;
-        let spinsRemaining = 1;
+        let spinsRemaining = 5;
+        let isOfflineMode = false;
+        let localParticipants = [];
+        
+        // Network status detection
+        let isOnline = navigator.onLine;
 
         // Prize configurations (fallback if Google Sheets fails)
         const defaultPrizes = [
@@ -828,7 +897,7 @@
             wheel.appendChild(svg);
         }
 
-        // Setup file upload with enhanced validation
+        // Setup file upload with enhanced validation and click trigger
         function setupFileUpload() {
             const fileInput = document.getElementById('screenshotFile');
             const uploadArea = document.querySelector('.file-upload');
@@ -836,6 +905,18 @@
             const filePreview = document.getElementById('filePreview');
             const previewImage = document.getElementById('previewImage');
             const fileName = document.getElementById('fileName');
+
+            // Click event to trigger file input - FIXED
+            uploadArea.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.click();
+            });
+
+            // Prevent event bubbling for the file input itself
+            fileInput.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
 
             // Drag and drop support
             uploadArea.addEventListener('dragover', function(e) {
@@ -1054,7 +1135,60 @@
             return prize.is_real === true;
         }
 
-        // Validate and start game with Google Sheets integration
+        // Enhanced network checking
+        async function checkConnection() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL + '?action=ping', {
+                    method: 'GET',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                return response.ok;
+            } catch (error) {
+                console.error('Connection check failed:', error);
+                return false;
+            }
+        }
+
+        // Offline mode validation and start game
+        function validateAndStartGameOffline() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+            const formattedPhone = formatPhoneNumber(phone);
+
+            // Check for duplicates in local storage
+            const existingParticipant = localParticipants.find(p => 
+                p.phone === formattedPhone || p.email === email
+            );
+
+            if (existingParticipant) {
+                showToast('تنبيه', 'لقد قمت بالمشاركة مسبقاً في هذه الجلسة', 'warning');
+                return;
+            }
+
+            // Create local participant
+            participantId = 'local_' + Date.now();
+            currentCustomer = {
+                id: participantId,
+                name: name,
+                phone: formattedPhone,
+                email: email,
+                timestamp: new Date()
+            };
+
+            // Store locally
+            localParticipants.push(currentCustomer);
+
+            showToast('نجح', 'تم تسجيل بياناتك بنجاح! (وضع محلي)', 'success');
+            showGameInterface();
+        }
+
+        // Validate and start game with enhanced error handling
         async function validateAndStartGame() {
             const name = document.getElementById('customerName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -1063,6 +1197,23 @@
             const submitButton = document.getElementById('submitButton');
             submitButton.disabled = true;
             submitButton.innerHTML = '<div class="loading w-5 h-5 border-2 border-white border-t-transparent rounded-full inline-block mr-2"></div>جاري التحقق...';
+
+            showLoading(true, 'جاري التحقق من الاتصال...', 25);
+
+            // Check connection first
+            const isConnected = await checkConnection();
+            
+            if (!isConnected) {
+                showLoading(false);
+                isOfflineMode = true;
+                showToast('تحذير', 'سيتم تشغيل التطبيق في الوضع المحلي', 'warning');
+                
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<span class="mr-2">🎯</span>ابدأ اللعب وادر العجلة<span class="ml-2">🎲</span>';
+                
+                validateAndStartGameOffline();
+                return;
+            }
 
             showLoading(true, 'جاري التحقق من البيانات...', 50);
 
@@ -1085,7 +1236,10 @@
                     formData.screenshotSize = currentScreenshot.size;
                 }
 
-                // Register participant
+                // Register participant with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
@@ -1094,9 +1248,11 @@
                     body: JSON.stringify({
                         action: 'registerParticipant',
                         data: formData
-                    })
+                    }),
+                    signal: controller.signal
                 });
 
+                clearTimeout(timeoutId);
                 const result = await response.json();
                 showLoading(false);
 
@@ -1124,11 +1280,68 @@
             } catch (error) {
                 showLoading(false);
                 console.error('Registration error:', error);
-                showToast('خطأ', 'حدث خطأ في التسجيل. يرجى المحاولة مرة أخرى.', 'error');
+                
+                if (error.name === 'AbortError') {
+                    showToast('خطأ', 'انتهت مهلة الاتصال. سيتم التشغيل في الوضع المحلي', 'warning');
+                    isOfflineMode = true;
+                    validateAndStartGameOffline();
+                } else {
+                    // Show custom error modal instead of generic message
+                    showConnectionErrorModal();
+                }
             }
 
             submitButton.disabled = false;
             submitButton.innerHTML = '<span class="mr-2">🎯</span>ابدأ اللعب وادر العجلة<span class="ml-2">🎲</span>';
+        }
+
+        // Show connection error modal
+        function showConnectionErrorModal() {
+            const modalHtml = `
+                <div id="connectionErrorModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-4">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center modal-content">
+                        <div class="text-6xl mb-4">🚫</div>
+                        <h3 class="text-2xl font-bold text-red-600 mb-4">خطأ في الاتصال</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">
+                            لا يمكن الاتصال بالخادم حالياً.<br>
+                            يمكنك المحاولة مرة أخرى أو تشغيل التطبيق في الوضع المحلي.
+                        </p>
+                        
+                        <div class="flex flex-col space-y-3">
+                            <button onclick="retryConnection()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                                <span class="mr-2">🔄</span>
+                                إعادة المحاولة
+                                <span class="ml-2">🌐</span>
+                            </button>
+                            <button onclick="startOfflineMode()" class="bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                                <span class="mr-2">📱</span>
+                                تشغيل محلي
+                                <span class="ml-2">⚡</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            setTimeout(() => {
+                document.querySelector('#connectionErrorModal .modal-content').classList.add('show');
+            }, 100);
+        }
+
+        // Retry connection
+        function retryConnection() {
+            document.getElementById('connectionErrorModal').remove();
+            validateAndStartGame();
+        }
+
+        // Start offline mode
+        function startOfflineMode() {
+            document.getElementById('connectionErrorModal').remove();
+            isOfflineMode = true;
+            showToast('معلومات', 'تم تشغيل التطبيق في الوضع المحلي', 'info');
+            validateAndStartGameOffline();
         }
 
         // Convert file to base64
@@ -1218,35 +1431,50 @@
                 
                 const actualWinningPrize = prizes[winningSegmentIndex];
                 
-                // Decrease spins remaining
-                spinsRemaining--;
+                // Handle spins remaining based on prize type
+                if (isRealPrize(actualWinningPrize)) {
+                    // Real prize won - decrease spins and end game
+                    spinsRemaining--;
+                    hasWonRealPrize = true;
+                    currentCustomer.prize = actualWinningPrize.text;
+                } else {
+                    // "Try again" - don't decrease spins, give another chance
+                    // Keep spins remaining the same for "try again" prizes
+                    if (spinsRemaining <= 1) {
+                        // If this was the last spin, give one more chance for "try again"
+                        spinsRemaining = 1;
+                    }
+                }
+                
                 updateSpinCounter();
                 
-                // Record prize in Google Sheets
-                try {
-                    const response = await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: 'recordPrize',
-                            data: {
-                                participantId: participantId,
-                                prizeId: actualWinningPrize.id,
-                                prizeText: actualWinningPrize.text,
-                                isReal: isRealPrize(actualWinningPrize),
-                                timestamp: new Date().toISOString()
-                            }
-                        })
-                    });
-                    
-                    const result = await response.json();
-                    if (result.success && result.couponCode) {
-                        currentCustomer.couponCode = result.couponCode;
+                // Record prize in Google Sheets (only if online)
+                if (!isOfflineMode) {
+                    try {
+                        const response = await fetch(GOOGLE_SCRIPT_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'recordPrize',
+                                data: {
+                                    participantId: participantId,
+                                    prizeId: actualWinningPrize.id,
+                                    prizeText: actualWinningPrize.text,
+                                    isReal: isRealPrize(actualWinningPrize),
+                                    timestamp: new Date().toISOString()
+                                }
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success && result.couponCode) {
+                            currentCustomer.couponCode = result.couponCode;
+                        }
+                    } catch (error) {
+                        console.error('Error recording prize:', error);
                     }
-                } catch (error) {
-                    console.error('Error recording prize:', error);
                 }
                 
                 await highlightWinningSegment();
@@ -1254,23 +1482,24 @@
                 
                 isSpinning = false;
                 
-                // Reset button
-                if (spinsRemaining > 0 && !isRealPrize(actualWinningPrize)) {
-                    spinButton.disabled = false;
-                    spinIcon.textContent = '🎲';
-                    spinText.textContent = 'دوّر مرة أخرى';
-                } else {
-                    spinIcon.textContent = '✅';
-                    spinText.textContent = 'انتهت اللعبة';
-                }
-                
-                // If real prize won, show download section
+                // Reset button based on prize type and remaining spins
                 if (isRealPrize(actualWinningPrize)) {
-                    hasWonRealPrize = true;
-                    currentCustomer.prize = actualWinningPrize.text;
+                    // Real prize won - end game
+                    spinIcon.textContent = '🎉';
+                    spinText.textContent = 'مبروك! انتهت اللعبة';
                     document.getElementById('downloadCouponSection').classList.remove('hidden');
                     spinsRemaining = 0; // End game after real prize
                     updateSpinCounter();
+                } else {
+                    // "Try again" prize - allow another spin
+                    if (spinsRemaining > 0) {
+                        spinButton.disabled = false;
+                        spinIcon.textContent = '🔄';
+                        spinText.textContent = 'أعد المحاولة مرة أخرى!';
+                    } else {
+                        spinIcon.textContent = '❌';
+                        spinText.textContent = 'انتهت المحاولات';
+                    }
                 }
                 
             }, 4000);
@@ -1337,6 +1566,44 @@
             return prizes[0];
         }
 
+        // Share to WhatsApp function
+        function shareToWhatsApp() {
+            if (!currentCustomer || !currentCustomer.prize) {
+                showToast('خطأ', 'لا يوجد كوبون للمشاركة', 'error');
+                return;
+            }
+
+            // Create WhatsApp message with coupon details
+            const message = `🎉 *مبروك! ربحت جائزة من Hero Bite Burger!* 🍔
+
+👤 *الاسم:* ${currentCustomer.name}
+📱 *رقم الجوال:* ${currentCustomer.phone}
+📧 *البريد الإلكتروني:* ${currentCustomer.email}
+
+🎁 *الجائزة:* ${currentCustomer.prize}
+${currentCustomer.couponCode ? `🎫 *رمز الكوبون:* ${currentCustomer.couponCode}` : ''}
+
+📅 *تاريخ الربح:* ${new Date().toLocaleDateString('ar-SA')}
+
+---
+هذا كوبون للتحقق من صحة الجائزة. يرجى إظهاره للكاشير عند الزيارة.
+
+🏪 Hero Bite Burger
+⭐ شكراً لك على تقييم مطعمنا!
+
+#HeroBiteBurger #ربحت_جائزة #عجلة_الحظ`;
+
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${RESTAURANT_WHATSAPP.replace('+', '')}?text=${encodedMessage}`;
+            
+            // Show success toast
+            showToast('نجح', 'سيتم فتح الواتساب الآن لإرسال تفاصيل الكوبون', 'success');
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+        }
+
         // Show prize result with enhanced UI
         async function showPrizeResult(prize) {
             const modal = document.getElementById('resultModal');
@@ -1344,6 +1611,8 @@
             const prizeDisplay = document.getElementById('prizeDisplay');
             const prizeInstructions = document.getElementById('prizeInstructions');
             const downloadButton = document.getElementById('downloadButton');
+            const whatsappButton = document.getElementById('whatsappButton');
+            const whatsappNotice = document.getElementById('whatsappNotice');
             const resultEmoji = document.getElementById('resultEmoji');
             const resultTitle = document.getElementById('resultTitle');
             
@@ -1362,8 +1631,11 @@
                     ` : ''}
                 `;
                 
+                // Show WhatsApp sharing elements for real prizes
                 prizeInstructions.classList.remove('hidden');
                 downloadButton.classList.remove('hidden');
+                whatsappButton.classList.remove('hidden');
+                whatsappNotice.classList.remove('hidden');
                 
             } else {
                 resultEmoji.textContent = '🔄';
@@ -1378,8 +1650,11 @@
                     </p>
                 `;
                 
+                // Hide WhatsApp sharing elements for "try again" prizes
                 prizeInstructions.classList.add('hidden');
                 downloadButton.classList.add('hidden');
+                whatsappButton.classList.add('hidden');
+                whatsappNotice.classList.add('hidden');
             }
             
             modal.classList.remove('hidden');
@@ -1388,120 +1663,363 @@
             }, 100);
         }
 
-        // Enhanced prize image generation
+        // Enhanced prize image generation with real restaurant logo and complete customer info
         function downloadPrizeImage() {
             if (!currentCustomer || !currentCustomer.prize) {
                 showToast('خطأ', 'لا يوجد كوبون للتحميل', 'error');
                 return;
             }
             
-            showLoading(true, 'جاري إنشاء الكوبون...', 75);
+            showLoading(true, 'جاري تحميل الشعار وإنشاء الكوبون...', 25);
             
+            // Load the restaurant logo first
+            const logoImg = new Image();
+            logoImg.crossOrigin = 'anonymous';
+            logoImg.onload = function() {
+                showLoading(true, 'جاري إنشاء الكوبون المحسن...', 75);
+                generateCouponWithLogo(logoImg);
+            };
+            logoImg.onerror = function() {
+                showLoading(true, 'جاري إنشاء الكوبون بدون الشعار...', 75);
+                generateCouponWithLogo(null);
+            };
+            logoImg.src = 'https://pfst.cf2.poecdn.net/base/image/6d279fccf7ba7374e9d5428043b9bbfc74b2a36348b7b7f3f7126c329183a32a?w=574&h=787';
+        }
+
+        function generateCouponWithLogo(logoImg) {
             // Create high-quality canvas
             const canvas = document.createElement('canvas');
-            canvas.width = 1200;
-            canvas.height = 800;
+            canvas.width = 1600;
+            canvas.height = 1200;
             const ctx = canvas.getContext('2d');
             
             // Enable high-quality rendering
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
             
-            // Background with enhanced gradient
-            const gradient = ctx.createLinearGradient(0, 0, 1200, 800);
-            gradient.addColorStop(0, '#dc2626');
-            gradient.addColorStop(0.3, '#ea580c');
-            gradient.addColorStop(0.7, '#eab308');
-            gradient.addColorStop(1, '#16a34a');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 1200, 800);
+            // Enhanced background with restaurant colors
+            const bgGradient = ctx.createLinearGradient(0, 0, 1600, 1200);
+            bgGradient.addColorStop(0, '#ffd700');
+            bgGradient.addColorStop(0.3, '#ff8c00');
+            bgGradient.addColorStop(0.6, '#ff6b35');
+            bgGradient.addColorStop(1, '#dc2626');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, 1600, 1200);
             
-            // Add pattern overlay
+            // Add decorative pattern
             ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-            for (let i = 0; i < 1200; i += 40) {
-                for (let j = 0; j < 800; j += 40) {
-                    ctx.fillRect(i, j, 20, 20);
+            for (let i = 0; i < 1600; i += 60) {
+                for (let j = 0; j < 1200; j += 60) {
+                    ctx.beginPath();
+                    ctx.arc(i, j, 4, 0, Math.PI * 2);
+                    ctx.fill();
                 }
             }
             
-            // Header background
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-            ctx.roundRect(50, 50, 1100, 200, 20);
+            // Main white background with shadow
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+            ctx.shadowBlur = 25;
+            ctx.shadowOffsetX = 10;
+            ctx.shadowOffsetY = 10;
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+            ctx.roundRect(50, 50, 1500, 1100, 35);
             ctx.fill();
             
-            // Hero Bite Burger Logo (text-based)
-            ctx.fillStyle = '#16a34a';
-            ctx.font = 'bold 48px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('HERO BITE BURGER', 600, 120);
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
             
-            // Subtitle
-            ctx.fillStyle = '#dc2626';
-            ctx.font = 'bold 36px Arial';
-            ctx.fillText('🎉 كوبون الجائزة 🎉', 600, 180);
-            
-            // Customer info section
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.roundRect(50, 300, 1100, 180, 15);
+            // Header section with restaurant logo and branding
+            const headerGradient = ctx.createLinearGradient(0, 80, 0, 300);
+            headerGradient.addColorStop(0, '#16a34a');
+            headerGradient.addColorStop(1, '#22c55e');
+            ctx.fillStyle = headerGradient;
+            ctx.roundRect(80, 80, 1440, 220, 30);
             ctx.fill();
             
-            ctx.fillStyle = '#1f2937';
-            ctx.font = 'bold 32px Arial';
-            ctx.textAlign = 'right';
-            ctx.fillText(`العميل: ${currentCustomer.name}`, 1100, 350);
-            
-            ctx.font = '24px Arial';
-            ctx.fillText(`رقم الجوال: ${currentCustomer.phone}`, 1100, 390);
-            
-            if (currentCustomer.couponCode) {
-                ctx.font = 'bold 20px monospace';
-                ctx.fillStyle = '#dc2626';
-                ctx.fillText(`رمز الكوبون: ${currentCustomer.couponCode}`, 1100, 430);
+            // Draw the restaurant logo
+            if (logoImg) {
+                // Logo background circle
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(200, 190, 90, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Logo border
+                ctx.strokeStyle = '#fcd34d';
+                ctx.lineWidth = 8;
+                ctx.beginPath();
+                ctx.arc(200, 190, 90, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // Draw the actual logo image
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(200, 190, 85, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.drawImage(logoImg, 115, 105, 170, 170);
+                ctx.restore();
+            } else {
+                // Fallback logo design
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(200, 190, 90, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.strokeStyle = '#fcd34d';
+                ctx.lineWidth = 8;
+                ctx.beginPath();
+                ctx.arc(200, 190, 90, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#16a34a';
+                ctx.font = 'bold 40px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('🍔', 200, 175);
+                ctx.font = 'bold 22px Arial';
+                ctx.fillText('HERO', 200, 195);
+                ctx.fillText('BITE', 200, 220);
             }
             
-            // Prize section
-            ctx.fillStyle = 'rgba(255, 235, 59, 0.9)';
-            ctx.roundRect(50, 520, 1100, 120, 15);
+            // Restaurant name and title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 72px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('HERO BITE BURGER', 320, 160);
+            
+            ctx.font = 'bold 36px Arial, sans-serif';
+            ctx.fillStyle = '#fcd34d';
+            ctx.fillText('🎉 كوبون الجائزة المميز 🎉', 320, 210);
+            
+            ctx.font = '24px Arial, sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('طعم الأبطال الحقيقي - جودة لا تُضاهى', 320, 245);
+            
+            // Customer Information Section - Enhanced Layout
+            ctx.fillStyle = 'rgba(248, 250, 252, 0.98)';
+            ctx.roundRect(80, 330, 1440, 250, 25);
             ctx.fill();
             
-            ctx.fillStyle = '#b91c1c';
-            ctx.font = 'bold 48px Arial';
+            // Add border to customer info section
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 2;
+            ctx.roundRect(80, 330, 1440, 250, 25);
+            ctx.stroke();
+            
+            // Customer info header
+            ctx.fillStyle = '#1e40af';
+            ctx.font = 'bold 42px Arial, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText(currentCustomer.prize, 600, 590);
+            ctx.fillText('معلومات العميل', 800, 375);
             
-            // Instructions
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.roundRect(50, 670, 1100, 80, 10);
+            // Debug: Log customer data
+            console.log('Customer data for coupon:', currentCustomer);
+            
+            // Customer details in a grid layout
+            const customerInfoStartY = 420;
+            const leftColumnX = 100;
+            const rightColumnX = 850;
+            const labelColor = '#1f2937';
+            const valueColor = '#dc2626';
+            
+            // Name (Top Left)
+            ctx.fillStyle = labelColor;
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('👤 الاسم الكامل:', leftColumnX, customerInfoStartY);
+            
+            ctx.fillStyle = valueColor;
+            ctx.font = '30px Arial, sans-serif';
+            const customerName = currentCustomer?.name || document.getElementById('customerName')?.value || 'غير محدد';
+            ctx.fillText(customerName, leftColumnX, customerInfoStartY + 40);
+            
+            // Phone (Top Right)
+            ctx.fillStyle = labelColor;
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.fillText('📱 رقم الجوال:', rightColumnX, customerInfoStartY);
+            
+            ctx.fillStyle = valueColor;
+            ctx.font = '30px Arial, sans-serif';
+            const customerPhone = currentCustomer?.phone || document.getElementById('customerPhone')?.value || 'غير محدد';
+            ctx.fillText(customerPhone, rightColumnX, customerInfoStartY + 40);
+            
+            // Email (Bottom Left)
+            ctx.fillStyle = labelColor;
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.fillText('📧 البريد الإلكتروني:', leftColumnX, customerInfoStartY + 90);
+            
+            ctx.fillStyle = valueColor;
+            ctx.font = '28px Arial, sans-serif';
+            const customerEmail = currentCustomer?.email || document.getElementById('customerEmail')?.value || 'غير محدد';
+            // Split long emails into two lines if needed
+            if (customerEmail.length > 25) {
+                const parts = customerEmail.split('@');
+                ctx.fillText(parts[0], leftColumnX, customerInfoStartY + 130);
+                ctx.fillText('@' + parts[1], leftColumnX, customerInfoStartY + 165);
+            } else {
+                ctx.fillText(customerEmail, leftColumnX, customerInfoStartY + 130);
+            }
+            
+            // Coupon code (Bottom Right)
+            if (currentCustomer?.couponCode) {
+                ctx.fillStyle = labelColor;
+                ctx.font = 'bold 32px Arial, sans-serif';
+                ctx.fillText('🎫 رمز الكوبون:', rightColumnX, customerInfoStartY + 90);
+                
+                ctx.fillStyle = valueColor;
+                ctx.font = 'bold 36px monospace';
+                ctx.fillText(currentCustomer.couponCode, rightColumnX, customerInfoStartY + 130);
+            } else {
+                // Registration date
+                ctx.fillStyle = labelColor;
+                ctx.font = 'bold 32px Arial, sans-serif';
+                ctx.fillText('📅 تاريخ التسجيل:', rightColumnX, customerInfoStartY + 90);
+                
+                ctx.fillStyle = valueColor;
+                ctx.font = '28px Arial, sans-serif';
+                const regDate = new Date().toLocaleDateString('ar-SA');
+                ctx.fillText(regDate, rightColumnX, customerInfoStartY + 130);
+            }
+            
+            // Prize section with enhanced styling
+            const prizeGradient = ctx.createLinearGradient(0, 610, 0, 780);
+            prizeGradient.addColorStop(0, '#fef3c7');
+            prizeGradient.addColorStop(1, '#fbbf24');
+            ctx.fillStyle = prizeGradient;
+            ctx.roundRect(80, 610, 1440, 170, 30);
             ctx.fill();
+            
+            // Prize border
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 6;
+            ctx.roundRect(80, 610, 1440, 170, 30);
+            ctx.stroke();
+            
+            // Prize icon and text
+            const currentPrize = prizes.find(p => p.text === (currentCustomer?.prize || ''));
+            const prizeIcon = currentPrize?.icon || '🎁';
+            
+            ctx.fillStyle = '#92400e';
+            ctx.font = 'bold 96px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(prizeIcon, 250, 720);
+            
+            ctx.fillStyle = '#7c2d12';
+            ctx.font = 'bold 72px Arial, sans-serif';
+            const prizeText = currentCustomer?.prize || 'جائزة مميزة';
+            ctx.fillText(prizeText, 800, 720);
+            
+            // QR Code placeholder
+            ctx.fillStyle = '#ffffff';
+            ctx.roundRect(1350, 630, 130, 130, 15);
+            ctx.fill();
+            ctx.strokeStyle = '#374151';
+            ctx.lineWidth = 3;
+            ctx.roundRect(1350, 630, 130, 130, 15);
+            ctx.stroke();
+            
+            // QR placeholder pattern
+            ctx.fillStyle = '#374151';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('QR CODE', 1415, 685);
+            ctx.fillText('للتحقق من', 1415, 705);
+            ctx.fillText('الكوبون', 1415, 725);
+            
+            // Instructions section
+            ctx.fillStyle = 'rgba(239, 246, 255, 0.95)';
+            ctx.roundRect(80, 810, 1440, 160, 25);
+            ctx.fill();
+            
+            ctx.fillStyle = '#1e40af';
+            ctx.font = 'bold 36px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📋 تعليمات الاستخدام', 800, 860);
             
             ctx.fillStyle = '#374151';
-            ctx.font = '20px Arial';
-            ctx.fillText('أظهر هذا الكوبون للكاشير للحصول على جائزتك', 600, 700);
+            ctx.font = '26px Arial, sans-serif';
+            ctx.fillText('أظهر هذا الكوبون للكاشير عند الطلب للحصول على جائزتك', 800, 895);
+            ctx.fillText('⚠️ يُرجى الاحتفاظ بهذا الكوبون حتى استخدامه - صالح لمرة واحدة فقط', 800, 925);
             
-            // Date and validity
-            ctx.font = '16px Arial';
-            const issueDate = new Date().toLocaleDateString('ar-SA');
-            const expiryDate = new Date(Date.now() + appSettings.couponValidityDays * 24 * 60 * 60 * 1000).toLocaleDateString('ar-SA');
+            // WhatsApp verification notice
+            ctx.fillStyle = '#16a34a';
+            ctx.font = 'bold 22px Arial, sans-serif';
+            ctx.fillText(`📱 تم إرسال تفاصيل الكوبون على الواتساب إلى: ${RESTAURANT_WHATSAPP}`, 800, 955);
             
-            ctx.fillText(`تاريخ الإصدار: ${issueDate}`, 400, 730);
-            ctx.fillText(`صالح حتى: ${expiryDate}`, 800, 730);
+            // Footer with dates and restaurant info
+            ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
+            ctx.roundRect(80, 990, 1440, 120, 25);
+            ctx.fill();
             
-            // Border decoration
+            // Date information
+            const issueDate = new Date().toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const expiryDate = new Date(Date.now() + (appSettings.couponValidityDays * 24 * 60 * 60 * 1000)).toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 22px Arial, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(`📅 تاريخ الإصدار: ${issueDate}`, 1480, 1030);
+            ctx.fillText(`⏰ صالح حتى: ${expiryDate}`, 1480, 1060);
+            
+            // Restaurant contact info
+            ctx.textAlign = 'left';
+            ctx.fillText('🏪 Hero Bite Burger Restaurant', 100, 1030);
+            ctx.font = '20px Arial, sans-serif';
+            ctx.fillStyle = '#d1d5db';
+            ctx.fillText('📍 للعنوان والاستفسارات: يرجى زيارة صفحة المطعم على خرائط جوجل', 100, 1060);
+            
+            // Serial number
+            const serialNumber = participantId ? participantId.slice(-8).toUpperCase() : Date.now().toString().slice(-8);
+            ctx.fillStyle = '#9ca3af';
+            ctx.font = '16px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Serial No: HBB-${serialNumber}`, 800, 1090);
+            
+            // Decorative border
             ctx.strokeStyle = '#dc2626';
-            ctx.lineWidth = 8;
-            ctx.roundRect(20, 20, 1160, 760, 25);
+            ctx.lineWidth = 10;
+            ctx.roundRect(50, 50, 1500, 1100, 35);
             ctx.stroke();
+            
+            // Corner decorations
+            const corners = [[80, 80], [1480, 80], [80, 1120], [1480, 1120]];
+            corners.forEach(([x, y]) => {
+                // Outer circle
+                ctx.fillStyle = '#fbbf24';
+                ctx.beginPath();
+                ctx.arc(x, y, 25, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Inner circle
+                ctx.fillStyle = '#dc2626';
+                ctx.beginPath();
+                ctx.arc(x, y, 15, 0, Math.PI * 2);
+                ctx.fill();
+            });
             
             showLoading(false);
             
-            // Download with timestamp
+            // Download with enhanced filename
             const link = document.createElement('a');
             const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-            link.download = `herobite_كوبون_${currentCustomer.name.replace(/\s+/g, '_')}_${timestamp}.png`;
+            const cleanName = (customerName || 'عميل').replace(/\s+/g, '_').replace(/[^\w\u0600-\u06FF]/g, '');
+            const cleanPrize = (prizeText || 'جائزة').replace(/\s+/g, '_');
+            link.download = `HeroBite_كوبون_${cleanName}_${cleanPrize}_${timestamp}.png`;
             link.href = canvas.toDataURL('image/png', 1.0);
             link.click();
             
-            showToast('نجح', 'تم تحميل الكوبون بنجاح', 'success');
+            showToast('نجح', 'تم تحميل الكوبون! لا تنس إرساله على الواتساب 🎉', 'success');
         }
 
         // Enhanced sound effects
